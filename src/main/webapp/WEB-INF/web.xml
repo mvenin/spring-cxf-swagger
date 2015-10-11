@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+
+	<display-name>Swagger-CXF-Sample</display-name>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	
+	<servlet>
+		<display-name>CXF Service Servlet</display-name>
+		<servlet-name>CXFServiceServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+
+		<!-- set the base path for the swagger application -->
+		<init-param>
+			<param-name>swagger.api.basepath</param-name>
+			<param-value>http://localhost:8080/rest/api</param-value>
+		</init-param>
+
+		<!-- configure a security filter -->
+		<init-param>
+			<param-name>swagger.security.filter</param-name>
+			<param-value>ApiAuthorizationFilterImpl</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- add the origin filter for JQuery CORS support -->
+	<filter>
+		<filter-name>ApiOriginFilter</filter-name>
+		<filter-class>ro.mve.rest.util.ApiOriginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ApiOriginFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- mount the CXF servlet on /api -->
+	<servlet-mapping>
+		<servlet-name>CXFServiceServlet</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+	<!-- 
+	<servlet>
+		<servlet-name>Bootstrap</servlet-name>
+		<servlet-class>ro.mve.rest.Bootstrap</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	 -->
+ 	
+ 	<!-- 
+ 	<servlet>
+    <servlet-name>DefaultJaxrsConfig</servlet-name>
+    <servlet-class>io.swagger.jaxrs.config.DefaultJaxrsConfig</servlet-class>
+    <init-param>
+      <param-name>api.version</param-name>
+      <param-value>1.0.0</param-value>
+    </init-param>
+    <init-param>
+      <param-name>swagger.api.title</param-name>
+      <param-value>Swagger Petstore</param-value>
+    </init-param>
+    <init-param>
+      <param-name>swagger.api.basepath</param-name>
+      <param-value>http://localhost:8080/rest/api</param-value>
+    </init-param>
+   <init-param>
+      <param-name>swagger.filter</param-name>
+      <param-value>ro.mve.rest.util.ApiAuthorizationFilterImpl</param-value>
+    </init-param> 
+    <init-param>
+      <param-name>scan.all.resources</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ignore.routes</param-name>
+      <param-value>/swagger.json,/swagger.yaml</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>  -->
+  
+</web-app>
