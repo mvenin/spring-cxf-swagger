@@ -15,23 +15,11 @@
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
-	
+
 	<servlet>
 		<display-name>CXF Service Servlet</display-name>
 		<servlet-name>CXFServiceServlet</servlet-name>
 		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
-
-		<!-- set the base path for the swagger application -->
-		<init-param>
-			<param-name>swagger.api.basepath</param-name>
-			<param-value>http://localhost:8080/rest/api</param-value>
-		</init-param>
-
-		<!-- configure a security filter -->
-		<init-param>
-			<param-name>swagger.security.filter</param-name>
-			<param-value>ApiAuthorizationFilterImpl</param-value>
-		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
@@ -54,44 +42,5 @@
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
-	
-	<!-- 
-	<servlet>
-		<servlet-name>Bootstrap</servlet-name>
-		<servlet-class>ro.mve.rest.Bootstrap</servlet-class>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-	 -->
- 	
- 	<!-- 
- 	<servlet>
-    <servlet-name>DefaultJaxrsConfig</servlet-name>
-    <servlet-class>io.swagger.jaxrs.config.DefaultJaxrsConfig</servlet-class>
-    <init-param>
-      <param-name>api.version</param-name>
-      <param-value>1.0.0</param-value>
-    </init-param>
-    <init-param>
-      <param-name>swagger.api.title</param-name>
-      <param-value>Swagger Petstore</param-value>
-    </init-param>
-    <init-param>
-      <param-name>swagger.api.basepath</param-name>
-      <param-value>http://localhost:8080/rest/api</param-value>
-    </init-param>
-   <init-param>
-      <param-name>swagger.filter</param-name>
-      <param-value>ro.mve.rest.util.ApiAuthorizationFilterImpl</param-value>
-    </init-param> 
-    <init-param>
-      <param-name>scan.all.resources</param-name>
-      <param-value>true</param-value>
-    </init-param>
-    <init-param>
-      <param-name>ignore.routes</param-name>
-      <param-value>/swagger.json,/swagger.yaml</param-value>
-    </init-param>
-    <load-on-startup>2</load-on-startup>
-  </servlet>  -->
-  
+
 </web-app>
