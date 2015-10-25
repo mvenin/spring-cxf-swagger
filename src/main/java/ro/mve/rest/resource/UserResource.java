@@ -10,10 +10,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import org.dozer.DozerBeanMapperSingletonWrapper;
+import org.dozer.Mapper;
+
 import io.swagger.annotations.Api;
 import ro.mve.rest.data.UserData;
 import ro.mve.rest.exception.ApiException;
 import ro.mve.rest.exception.NotFoundException;
+import ro.mve.rest.mapper.SourceBean;
+import ro.mve.rest.mapper.TargetBean;
 import ro.mve.rest.model.User;
 
 @Api(value = "/user")
@@ -64,6 +69,13 @@ public class UserResource {
   @Path("/{username}")
   public Response getUserByName(@PathParam("username") String username)
     throws ApiException {
+	  Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
+	  
+	  SourceBean sourceBean = new SourceBean();
+	  TargetBean destObject = 
+			    mapper.map(sourceBean, TargetBean.class);
+	  
+	  
     User user = userData.findUserByName(username);
     if (null != user) {
       return Response.ok().entity(user).build();
